@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab-5-1</title>
+    <style>
+        .icon {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+        }
+		.valid {
+            border: 2px solid green;
+        }
+        .invalid {
+            border: 2px solid red;
+        }
+		.hidden {
+            display: none;
+        }
+    </style>
+
+	<script>
+			
+		window.addEventListener('DOMContentLoaded', () => {
+
+			(function(){
+			"use strict";
+			
+			const form = document.getElementById('myForm');
+
+			form.addEventListener('input', function(event) {
+
+				const field = event.target;
+				const icon = document.getElementById(field.id + 'Icon');
+				
+				if (field.checkValidity()) {
+					field.classList.remove('invalid');
+					field.classList.add('valid');
+					icon.src = '../yes.jpeg';
+				} else {
+					field.classList.remove('valid');
+					field.classList.add('invalid');
+					icon.src = '../no.jpeg';
+				}
+			});
+			
+			form.addEventListener('submit', function(event) {
+
+				event.preventDefault();
+				if (form.checkValidity()) {
+					alert('Форма успешно отправлена!');
+					form.reset();
+					document.querySelectorAll('.icon').forEach(icon => {
+						icon.src = '../no.jpeg';
+						icon.previousElementSibling.classList.remove('valid', 'invalid');
+					});
+				} else {
+					alert('Пожалуйста, заполните все обязательные поля.');
+				}
+        });
+			
+		}());});
+	</script>
+</head>
+<body>
+    <h3>Пожалуйста, заполните обязательные поля.</h3>
+    <form id="myForm">
+        <label for="name">Имя: </label>
+        <input type="text" id="name" required>
+        <img src="../no.jpeg" alt="no" class="icon" id="nameIcon">
+        <br><br>
+
+        <label for="age">Возраст: </label>
+        <input type="number" id="age" min="1" max="100">
+        <img src="../no.jpeg" alt="no" class="icon" id="ageIcon">
+        <br><br>
+
+        <label for="email">E-mail: </label>
+        <input type="email" id="email" required>
+        <img src="../no.jpeg" alt="no" class="icon" id="emailIcon">
+        <br><br>
+
+        <label for="website">Сайт: </label>
+        <input type="url" id="website">
+        <img src="../no.jpeg" alt="no" class="icon" id="websiteIcon">
+        <br><br>
+
+        <button type="submit">Отправить</button>
+    </form>
+
+</body>
+</html>
